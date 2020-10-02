@@ -1,75 +1,15 @@
-import os, sys, configparser
 import shutil
-import subprocess
-import json
 
 from flask import Flask
 from flask import request, render_template, url_for, redirect
 from datetime import datetime
 from glob import glob
 
+import prg.constantes as c
+
 from prg.fonctions import p_var, recup_rep_travail_autre, dir_traitfichier
 from prg.fonctions import lecture_param, ecriture_params, save_adr_retour
-from prg.constantes import *
-
-LANCEURS = {"Lindab": LINDAB,
-			"Quittances": NHAVISECHEANCES,
-			"Relance": NHAVISRELANCES,
-			"Regularisation": NHREGULARISATIONS,
-			"Sls": NHSLS,
-			"Mif": MIF,
-			"P2r": P2R,
-			"Enveloppes": ENVELOPPES
-}
-
-def lance_application(**kwargs):
-    """Lance les applications
-
-    Args:
-        kwargs:
-            lanceur (str): Lanceur
-            date_traitement (str, optional): Date de traitement. Defaults to "".
-            date_timbre (str, optional): Date de timbre. Defaults to "".
-            rep (str, optional): Répertoire de travail. Defaults to "".
-            datas (dict, optional): Données du formulaire annexe. Defaults to "".
-
-    Raises:
-        Exception: Erreur si le lanceur n'existe pas.
-    """
-    
-    lanceur = kwargs["lanceur"]
-    if lanceur in LANCEURS:
-        command = LANCEURS[lanceur]   
-        if len(kwargs) > 1:
-            if "date_traitement" in kwargs:
-                command += " " + kwargs["date_traitement"]
-            if "date_timbre" in kwargs:
-                command += " " + kwargs["date_timbre"]
-            if "rep" in kwargs:
-                command += " " + kwargs["rep"]
-            if "fichier" in kwargs:
-                command += " " + kwargs["fichier"]
-            if "datas" in kwargs:
-                for key, value in kwargs["datas"].items():
-                    command += f" {value}"
-        os.system(command)
-    else:
-        raise Exception("Ce lanceur n'existe pas.")	
-
-def read_datas(fichier):
-    """ lit le contenu du fichier json
-
-    Args:
-        fichier (str): Chemin du fichier à lire
-
-    Returns:
-        dict: Contenu du fichier data
-    """  
-    if not os.path.exists(fichier): # or not FIC_DATA_MIF:
-        return {}
-    with open(fichier, 'r') as f:
-        datas = json.load(f)
-    return datas
+from prg.fonctions import read_datas, lance_application
 
 app = Flask(__name__)
 
@@ -87,12 +27,12 @@ def lanceur(lanceur):
         elif lanceur == "Mif":         
             date_timbre = request.form['mif']
             lance_application(lanceur=lanceur, date_timbre=date_timbre)
-            if read_datas(FIC_DATA_MIF)["lotissement"] == "non":
+            if read_datas(c.FIC_DATA_MIF)["lotissement"] == "non":
                 return redirect(url_for("lanceur", lanceur="Mif_lotissement"))
             return render_template("pages/prise_en_compte.html")    
         elif lanceur == "Mif_lotissement":
             lance_application(lanceur="Mif")
-            if read_datas(FIC_DATA_MIF)["lotissement"] == "non":
+            if read_datas(c.FIC_DATA_MIF)["lotissement"] == "non":
                 return redirect(url_for("lanceur", lanceur="Mif_lotissement"))
             return render_template("pages/prise_en_compte.html")
         elif lanceur == "P2r": 
@@ -101,7 +41,7 @@ def lanceur(lanceur):
         elif lanceur == "Quittances":
             if not request.form:	
                 lance_application(lanceur=lanceur)
-                datas = read_datas(FIC_DATA_QUITTANCES)
+                datas = read_datas(c.FIC_DATA_QUITTANCES)
                 if datas["annexe"] == "True":
                     return render_template("pages/quittance_form_annexe.html")	
                 return render_template("pages/prise_en_compte.html")
@@ -113,12 +53,12 @@ def lanceur(lanceur):
             return render_template("pages/prise_en_compte.html")	
         elif lanceur == "Sls":
             lance_application(lanceur=lanceur, date_timbre=request.form["sls"])
-            if read_datas(FIC_DATA_SLS)["correction"] == "oui":
+            if read_datas(c.FIC_DATA_SLS)["correction"] == "oui":
                 return redirect(url_for("lanceur", lanceur="Sls_correction"))
             return render_template("pages/prise_en_compte.html")    
         elif lanceur == "Sls_correction":
             lance_application(lanceur="Sls")
-            if read_datas(FIC_DATA_SLS)["correction"] == "oui":
+            if read_datas(c.FIC_DATA_SLS)["correction"] == "oui":
                 return redirect(url_for("lanceur", lanceur="Sls_correction"))
             return render_template("pages/prise_en_compte.html")        
     elif lanceur == "Enveloppes":
@@ -184,7 +124,7 @@ def enveloppes_recup(rep=None):
 def enveloppes_adr_expe(rep=None, adr_retour=None):
     if request.method == "POST":
         save_adr_retour(rep, request.form["adr_retour"])             
-        shutil.copy(FIC_ADR_EXPE, rep)
+        shutil.copy(c.FIC_ADR_EXPE, rep)
         lance_application(lanceur="Enveloppes", rep=rep)        
         return render_template("pages/prise_en_compte.html")
     return render_template("pages/enveloppes_adr_expe.html", rep=rep, adr_retour=adr_retour)
@@ -205,7 +145,7 @@ def clients():
 
 @app.context_processor
 def affras(): 
-    affras = (AFFRAS_K7, AFFRAS_KUB)
+    affras = (c.AFFRAS_K7, c.AFFRAS_KUB)
     return dict(affras=affras)
 
 @app.context_processor
@@ -223,7 +163,7 @@ def utility_processor_params():
 
 @app.context_processor
 def nom_lotissement():
-    datas = read_datas(FIC_DATA_MIF)
+    datas = read_datas(c.FIC_DATA_MIF)
     traitement = ""
     if datas:
         traitement = datas['traitement']

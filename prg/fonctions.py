@@ -1,7 +1,7 @@
-# -*- coding: UTF-8 -*-
+# coding: UTF-8
 import os
 import sys
-import shutil
+import json
 
 from glob import glob
 from datetime import datetime
@@ -76,14 +76,34 @@ def lecture_param(rep_travail, index):
             param = datetime.strptime(liste_params[index], "%d-%m-%Y").strftime("%Y-%m-%d")
     return param
 
-def p_var(): 
-    # Etape 2 : Récupération de la liste des clients sur P\VAR
+def p_var():
+    """ Clients dans P/Var
+
+    Args:
+        
+    Returns:
+        clients (list): Liste des clients sur P/Var.
+    """   
+    
     listes_var = glob(f"{const.DIR_VAR}/*")
     clients = [os.path.basename(liste_var) for liste_var in listes_var]
     return clients 
 
-def recup_rep_travail_autre(client, no_bt): 
-    # Etape 3 : Détermination du répertoire de travail
+def recup_rep_travail_autre(client, no_bt):
+    """ Determination du repertoire de travail
+
+    Args:
+        client (str): Client
+        no_bt  (str): Numero de BT
+    Returns:
+        (rep_travail, ope, backup_env, traitfichier, final) (tupple):
+        rep_travail  (str) :  Repertoire de travail
+        ope          (str) :  Operation
+        backup_env   (Bool): Presence du fichier BackupEnv.txt        
+        traitfichier (Bool): Presence du dossier TraitFichier
+        final        (Bool): Presence du fichier _FINAL.CSV.
+    """    
+    
     traitfichier = False
     final        = False	
     rep_client   = os.path.join(const.DIR_VAR, client)
@@ -94,7 +114,7 @@ def recup_rep_travail_autre(client, no_bt):
     dossier    = os.path.basename(rep_travail)                      
     ope        = "-".join(dossier.split("-")[1:])   
     backup_env = False
-    if os.path.exists(os.path.join(rep_travail, "AdrExpe.txt")):
+    if os.path.exists(os.path.join(rep_travail, "BackupEnv.txt")):
         backup_env = True
     rep_traitfichier = os.path.join(rep_travail, "TraitFichier")
     final            = dir_traitfichier(rep_travail)[3]
@@ -103,11 +123,64 @@ def recup_rep_travail_autre(client, no_bt):
     return (rep_travail, ope, backup_env, traitfichier, final)
 
 def save_adr_retour(rep, params):
+    """ Sauvegarde de l'adresses retour
+
+    Args:
+        rep (str)   : Repertoire de travail
+        params (str): Adresse retour.    
+    Returns:
+        
+    """   
+
     with open(const.FIC_ADR_EXPE, "w") as f:
         params = params.translate({ord(c): None for c in "\r"}) # pour supprimer les sauts de ligne
         f.write(params)
 
-if __name__ == "__main__":
-    rep_travail, ope, backup_env, traitfichier, final = recup_rep_travail_autre("SOGEC", 'SEVEN2020090701')
-    print(rep_travail, ope, backup_env, traitfichier, final)
-    print(dir_traitfichier("P:\\Var\\SOGEC\\SEVEN2020090701-Test"))
+def lance_application(**kwargs):
+    """ Lance les applications
+
+    Args:
+        kwargs:
+            lanceur (str): Lanceur
+            date_traitement (str, optional): Date de traitement. Defaults to "".
+            date_timbre (str, optional): Date de timbre. Defaults to "".
+            rep (str, optional): Répertoire de travail. Defaults to "".
+            datas (dict, optional): Données du formulaire annexe. Defaults to "".
+
+    Raises:
+        Exception: Erreur si le lanceur n'existe pas.
+    """
+    
+    lanceur = kwargs["lanceur"]
+    if lanceur in const.LANCEURS:
+        command = const.LANCEURS[lanceur]   
+        if len(kwargs) > 1:
+            if "date_traitement" in kwargs:
+                command += " " + kwargs["date_traitement"]
+            if "date_timbre" in kwargs:
+                command += " " + kwargs["date_timbre"]
+            if "rep" in kwargs:
+                command += " " + kwargs["rep"]
+            if "fichier" in kwargs:
+                command += " " + kwargs["fichier"]
+            if "datas" in kwargs:
+                for key, value in kwargs["datas"].items():
+                    command += f" {value}"
+        os.system(command)
+    else:
+        raise Exception("Ce lanceur n'existe pas.")	
+
+def read_datas(fichier):
+    """ Lit le contenu du fichier json
+
+    Args:
+        fichier (str): Chemin du fichier à lire
+
+    Returns:
+        dict: Contenu du fichier data
+    """  
+    if not os.path.exists(fichier):
+        return {}
+    with open(fichier, 'r') as f:
+        datas = json.load(f)
+    return datas

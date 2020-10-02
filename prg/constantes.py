@@ -1,3 +1,4 @@
+# coding: UTF-8
 import os
 
 DIR_INTERFACE       = os.path.dirname(os.path.dirname(__file__))
@@ -12,7 +13,25 @@ FIC_DATA_MIF        = os.path.join(DIR_INTERFACE, "data", "Mif", "data.json")
 FIC_DATA_QUITTANCES = os.path.join(DIR_INTERFACE, "data", "Quittances", "data.json")
 FIC_DATA_SLS        = os.path.join(DIR_INTERFACE, "data", "Sls", "data.json")
 CONFIG_PNT          = "P:\\Var\\_CommunPNT\\SevenForceCMYK-2018.job"
-MOTEUR_PNT          = chr(34) + "C:\\Program Files\\Quadient\\Inspire Designer 12.0\\InspireCLI.exe"+ chr(34) 
+MOTEUR_PNT          = chr(34)    + "C:\\Program Files\\Quadient\\Inspire Designer 12.0\\InspireCLI.exe"+ chr(34) 
+# Lanceurs
+LINDAB              = os.path.join(DIR_PROD, "Lindab", "_automate", "lindab.py")
+NHAVISECHEANCES     = os.path.join(DIR_AUTOMATE_NH, "NH-QUITTANCES", "nh_quittances.py")
+NHAVISRELANCES      = os.path.join(DIR_AUTOMATE_NH, "NH-RELANCES", "NHAvisRelances.py")
+NHREGULARISATIONS   = os.path.join(DIR_AUTOMATE_NH, "NH-REGULARISATIONS", "REG01-LanceRegularisations.bat")
+NHSLS               = os.path.join(DIR_AUTOMATE_NH, "NH-SLS", "nh_sls.py")
+MIF                 = os.path.join(DIR_PROD, "Mif", "_automate", "mif.py")
+P2R                 = os.path.join(DIR_PROD, "P2r", "_automate", "p2r.py")
+ENVELOPPES          = os.path.join(DIR_AUTOMATE_ENV, "enveloppes.py")
+LANCEURS            = {"Lindab" :       LINDAB,
+                    "Quittances":       NHAVISECHEANCES,
+                    "Relance":          NHAVISRELANCES,
+                    "Regularisation":   NHREGULARISATIONS,
+                    "Sls":              NHSLS,
+                    "Mif":              MIF,
+                    "P2r":              P2R,
+                    "Enveloppes":       ENVELOPPES
+}
 LISTE_INDEX         = [
                 "entete",
                 "client",
@@ -79,12 +98,3 @@ AFFRAS_KUB = [
                 "CAT7-S",
                 "VIDE"
 ]
-# Lanceurs
-LINDAB               = os.path.join(DIR_PROD, "Lindab", "_automate", "lindab.py")
-NHAVISECHEANCES      = os.path.join(DIR_AUTOMATE_NH, "NH-QUITTANCES", "nh_quittances.py")
-NHAVISRELANCES       = os.path.join(DIR_AUTOMATE_NH, "NH-RELANCES", "NHAvisRelances.py")
-NHREGULARISATIONS    = os.path.join(DIR_AUTOMATE_NH, "NH-REGULARISATIONS", "REG01-LanceRegularisations.bat")
-NHSLS                = os.path.join(DIR_AUTOMATE_NH, "NH-SLS", "nh_sls.py")
-MIF                  = os.path.join(DIR_PROD, "Mif", "_automate", "mif.py")
-P2R                  = os.path.join(DIR_PROD, "P2r", "_automate", "p2r.py")
-ENVELOPPES           = os.path.join(DIR_AUTOMATE_ENV, "enveloppes.py")
