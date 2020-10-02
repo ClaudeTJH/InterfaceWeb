@@ -45,7 +45,13 @@
                     <select name="affra">
                         <optgroup label="K7">
                             <option value="{{ param(rep,'affra') }}">{{ param(rep,'affra') }}</option>
-                            {% for affra in affras %}
+                            {% for affra in affras[0] %}
+                            <option value="{{ affra }}">{{ affra }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="KUB">
+                            <option value="{{ param(rep,'affra') }}">{{ param(rep,'affra') }}</option>
+                            {% for affra in affras[1] %}
                             <option value="{{ affra }}">{{ affra }}</option>
                             {% endfor %}
                         </optgroup>

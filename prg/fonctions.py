@@ -76,39 +76,6 @@ def lecture_param(rep_travail, index):
             param = datetime.strptime(liste_params[index], "%d-%m-%Y").strftime("%Y-%m-%d")
     return param
 
-def liste_affras_K7():
-    affras_K7 = [
-                "LGC",
-                "EGC",
-                "DIK7",
-                "DEL",
-                "DKDO",
-                "DP",
-                "EE",
-                "EN",
-                "LP",
-                "LPE",
-                "LN",
-                "LV",
-                "LG2",
-                "ECOPLI",
-                "DESTINEO",
-                "DITRIMAG"
-    ]
-    return affras_K7
-    
-def liste_affras_KUB():
-    affras_KUB = [
-                "DIK-MD4",
-                "DIK-MD7",
-                "DIK-S",
-                "DKDOP",
-                "CAT7",
-                "CAT7-S",
-                "VIDE"
-    ]
-    return affras_KUB
-    
 def p_var(): 
     # Etape 2 : Récupération de la liste des clients sur P\VAR
     listes_var = glob(f"{const.DIR_VAR}/*")

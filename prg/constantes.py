@@ -52,6 +52,33 @@ TYPES_FICHERS       = [
                 ".xls",
                 ".XLS"
 ]
+AFFRAS_K7 = [
+                "LGC",
+                "EGC",
+                "DIK7",
+                "DEL",
+                "DKDO",
+                "DP",
+                "EE",
+                "EN",
+                "LP",
+                "LPE",
+                "LN",
+                "LV",
+                "LG2",
+                "ECOPLI",
+                "DESTINEO",
+                "DITRIMAG"
+]
+AFFRAS_KUB = [
+                "DIK-MD4",
+                "DIK-MD7",
+                "DIK-S",
+                "DKDOP",
+                "CAT7",
+                "CAT7-S",
+                "VIDE"
+]
 # Lanceurs
 LINDAB               = os.path.join(DIR_PROD, "Lindab", "_automate", "lindab.py")
 NHAVISECHEANCES      = os.path.join(DIR_AUTOMATE_NH, "NH-QUITTANCES", "nh_quittances.py")

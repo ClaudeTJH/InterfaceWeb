@@ -39,10 +39,18 @@
                     </select>
                 </div>    
                 <div class="env_l2_c3">
-                    <label>Affranchissement</label><select name="affra">
-                        {% for affra in affras %}
-                        <option value="{{ affra }}">{{ affra }}</option>
-                        {% endfor %}
+                    <label>Affranchissement</label>
+                    <select name="affra">
+                        <optgroup label="K7">
+                            {% for affra in affras[0] %}
+                            <option value="{{ affra }}">{{ affra }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="KUB">
+                            {% for affra in affras[1] %}
+                            <option value="{{ affra }}">{{ affra }}</option>
+                            {% endfor %}
+                        </optgroup>                    
                     </select>
                 </div> 
                 <div class="env_l2_c4">

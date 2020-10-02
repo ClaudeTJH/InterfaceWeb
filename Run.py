@@ -8,7 +8,7 @@ from flask import request, render_template, url_for, redirect
 from datetime import datetime
 from glob import glob
 
-from prg.fonctions import p_var, recup_rep_travail_autre, liste_affras_K7, liste_affras_KUB, dir_traitfichier
+from prg.fonctions import p_var, recup_rep_travail_autre, dir_traitfichier
 from prg.fonctions import lecture_param, ecriture_params, save_adr_retour
 from prg.constantes import *
 
@@ -204,14 +204,9 @@ def clients():
     return dict(clients=clients) 
 
 @app.context_processor
-def affras_K7(): 
-    affras = liste_affras_K7()
-    return dict(affras_K7=affras)
-
-@app.context_processor
-def affras_KUB(): 
-    affras = liste_affras_KUB()
-    return dict(affras_KUB=affras)
+def affras(): 
+    affras = (AFFRAS_K7, AFFRAS_KUB)
+    return dict(affras=affras)
 
 @app.context_processor
 def utility_processor_fichiers():
