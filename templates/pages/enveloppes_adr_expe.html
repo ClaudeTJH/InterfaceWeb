@@ -1,0 +1,20 @@
+{% extends 'layouts/default.html'%}
+
+{% block body %}
+    <h2>Traitement des Enveloppes</h2>
+    
+    <fieldset>
+        <form method="post">              
+                <div class="env_a_l1_c1">
+                    <label>Adresse Expéditeur</label>
+                    <textarea name="adr_retour" id="adr_retour" cols="70" rows="7">{% if adr_retour %}{{ param(rep, 'adr_retour') }}{% endif %}</textarea>
+                </div>
+                <div>
+                    <button class="buttonEnv" type="reset">Annuler</button> 
+                </div>  
+                <div>  
+                    <button class="buttonEnv" type="submit">Valider</button>
+                </div>
+        </form>
+    </fieldset> 
+{% endblock body %}

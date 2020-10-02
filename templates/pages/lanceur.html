@@ -1,0 +1,50 @@
+{% extends 'layouts/default.html' %}
+
+{% block body %}
+    {% if lanceur == "Lindab" %}
+        <h1>Traitement de Lindab</h1>
+    {% elif lanceur == "Mif" %}
+        <h1>Traitement de la MIF</h1>
+    {% elif lanceur == "Mif_lotissement" %}
+        <h1>Lotissement de la MIF à faire</h1>
+    {% else %}
+        <h1>Lancer {{ lanceur }}</h1>
+    {% endif %}
+    
+    <form method="post">
+        {% if lanceur == "Lindab" %}
+        <div>
+            <label>Date de Traitement</label><br><br>            
+            <input class= "buttonMenu" type="date" name="lindab" value="Lindab_ok">
+        </div>
+        {% elif lanceur == "Sls" %}
+        <div>
+            <label>Date de Timbre</label><br><br>            
+            <input class= "buttonMenu" type="date" name="sls" value="Sls">
+        </div>
+        {% elif lanceur == "Sls_correction" %}
+        <h2>Veuillez corriger les erreurs si besoin, générer le FINAL et</h2>
+        <p>faire le lotissement pour un affranchissement en EGC Méca,<br/>
+            pour un pli de 21 grammes puis valider pour continuer le processus.<br/>
+        </p>
+        {% elif lanceur == "Mif" %}
+        <div>
+            <label>Date de Timbre</label><br><br>            
+            <input class= "buttonMenu" type="date" name="mif" value="Mif">
+        </div>
+        {% elif lanceur == "Mif_lotissement" %}
+        <h2>Attention le lotissement est obligatoire.</h2>
+        <p>Veuillez faire le lotissement pour un affranchissement en<br/>
+            DESTINEO KUB SIMPLY, pour un pli de 17 grammes<br/>
+            et une enveloppe de type C5.<br/>
+            Sur le compte du client : IVRY LA FRATERNELLE.<br/><br/>
+            Puis valider pour continuer le processus.
+        </p>
+        <label>Nom du lotissement :</label><br/>
+        <input type="text" name="nom" value="{{ nom_lotissement }}" readonly>
+        {% endif %}
+        <br><br>
+        <div><button  class="buttonMenu" type="submit">Valider</button></div> 
+    </form>
+{% endblock body %}
+

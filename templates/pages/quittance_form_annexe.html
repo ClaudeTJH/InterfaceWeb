@@ -1,0 +1,59 @@
+{% extends 'layouts/default.html'%}
+
+{% block body %}
+    <h2>Renseignements sur l'Annexe</h2>
+    
+    <fieldset>  
+        <form method="post">
+            <div class="annexe">
+                <div class="l1_c1">
+                    <label for="type_imp" id="type_imp">Type d'impression</label>
+                    <select name="type_imp">
+                        <option value="N">Noir</option>
+                        <option value="Q">Quadri</option>
+                    </select>
+                </div>
+                <div class="l1_c2">
+                    <label for="format" id="format">Format</label>
+                    <select name="format">
+                        <option value="R">Recto</option>
+                        <option value="RV">Recto Verso</option>
+                    </select>
+                </div>
+                <div class="l1_c3">
+                    <label for="imposition" id="imposition">Imposition</label>
+                    <select name="imposition">
+                        <option value="A4">A4</option>
+                        <option value="A4P">A4 Paysage</option>
+                    </select>
+                </div>
+                <div class="l2_c1">
+                    <label for="assemblage" id="assemblage">Assemblage</label>
+                    <select name="assemblage">
+                        <option value="False">Non</option>
+                        <option value="True">Oui</option>
+                    </select>
+                </div>
+                <div class="l2_c2">
+                    <label for="imp_st" id="imp_st">Soustraitance</label>
+                    <select name="imp_st">
+                        <option value="False">Non</option>
+                        <option value="True">Oui</option>
+                    </select>
+                </div>
+                <div class="l2_c3">
+                    <label for="poids" id="poids">Poids</label>
+                    <input type="number" name="poids" min="0" value="0" id="valeur_poids">
+                </div>
+            </div>
+            <div class="annexe2">
+                <div class="l3_c1">
+                    <input class="buttonEnv" type="reset" value="Réinitialiser">
+                </div>
+                <div class="l3_c2">
+                    <input class="buttonEnv" type="submit" value="Envoyer">
+                </div> 
+            </div>
+        </form>
+    </fieldset>
+{% endblock body %}

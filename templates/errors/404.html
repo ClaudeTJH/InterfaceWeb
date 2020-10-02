@@ -1,0 +1,8 @@
+{% extends 'layouts/default.html'%}
+
+{% block body %}          
+    <h1>Error 404</h1>
+
+    <h2>Le lanceur tapé n'existe pas.</h2>
+    <a href="{{ url_for('menu') }}"> <input class= "buttonMenu" type="button" value="Retour"></a>
+{% endblock body%}

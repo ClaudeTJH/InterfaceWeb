@@ -1,0 +1,13 @@
+{% extends 'layouts/default.html'%}
+
+{% block body %}
+    <h1>[NIEVRE HABITAT]</h1>
+    
+    <a href="{{ url_for('lanceur', lanceur='Sls') }}"> <input class= "buttonMenu" type="button" value="Enquêtes SLS"></a>
+    <br><br>
+    <a href="{{ url_for('lanceur', lanceur='Quittances') }}"> <input class= "buttonMenu" type="button" value="Quittances"></a>
+    <br><br>
+    <a href="{{ url_for('lanceur', lanceur='Regularisation') }}"> <input class= "buttonMenu" type="button" value="Régularisations"></a>
+    <br><br>
+    <a href="{{ url_for('lanceur', lanceur='Relance') }}"> <input class= "buttonMenu" type="button" value="Relances"></a>
+{% endblock body%}

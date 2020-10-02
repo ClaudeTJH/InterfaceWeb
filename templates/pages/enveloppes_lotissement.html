@@ -1,0 +1,19 @@
+{% extends 'layouts/default.html' %}
+
+{% block body %}
+    <h1>Correction des erreurs et Lotissement</h1>
+    <form method="post">
+        {% if not final %}
+            <p>Veuillez corriger les erreurs, générer le FINAL et faire le lotissement</p>
+            <p>si besoin puis valider pour continuer le processus.</p>
+        {% else %}
+            <p>Faire le lotissement si besoin</p>
+            <p>puis valider pour continuer le processus.</p>
+        {% endif %}
+        <input name="client" value="{{ client }}" type="hidden">
+        <input name="bt" value="{{ bt }}" type="hidden">
+        <input name="debut" value="False" type="hidden">
+        <div><button  class="buttonMenu" type="submit">Valider</button></div> 
+    </form>
+{% endblock body %}
+

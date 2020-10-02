@@ -1,0 +1,13 @@
+{% extends 'layouts/default.html' %}
+
+{% block body %}
+    <a href="{{ url_for('lanceur', lanceur='Enveloppes') }}"><input class= "buttonMenu" type="button" value="Enveloppes"></a>
+    <br><br>
+    <a href="{{ url_for('lanceur', lanceur='Lindab') }}"><input class= "buttonMenu" type="button" value="Lindab"></a>
+    <br><br>
+    <a href="{{ url_for('lanceur', lanceur='Mif') }}"><input class= "buttonMenu" type="button" value="MIF"></a>
+    <br><br>
+    <a href="{{ url_for('menu') }}"><input class= "buttonMenu" type="button" value="Nièvre Habitat"></a>
+    <br><br>
+    <a href="{{ url_for('lanceur', lanceur='P2r') }}"><input class= "buttonMenu" type="button" value="P2R"></a>
+{% endblock body %}

@@ -1,0 +1,161 @@
+{% extends 'layouts/default.html'%}
+
+{% block body %}
+    <h2>Traitement des Enveloppes</h2>
+    
+    <fieldset>  
+        <form method="post">
+            <div class="enveloppe">
+                <div class="env_l1_c1">
+                    <label>Client</label>
+                    <input type="text" name="client" value="{{ client }}" class="inputTable">
+                </div> 
+                <div class="env_l1_c2">
+                    <label>BT</label>
+                    <input type="text" name="no_bt" value="{{ no_bt }}" placeholder="Numéro du BT" class="inputTable" required>
+                </div>    
+                <div class="env l1_c3">
+                    <label>Opération</label>
+                    <input type="text" name="ope" value="{{ ope }}" placeholder="Opération" class="inputTable" required>
+                </div>
+                <div class="env_l1_c4">
+                    <label>IdOpe</label>
+                    <input type="text" name="idope" value="" placeholder="IdOpe" class="inputTable" required>
+                </div>    
+                <div class="env_l2_c1">
+                    <label>Enveloppe</label>
+                    <select name="env">
+                        <option value="C6" selected>C6</option>
+                        <option value="C5">C5</option>
+                        <option value="C4">C4</option>
+                        <option value="SPECIAL">SPECIAL</option>
+                    </select>
+                </div>    
+                <div class="env_l2_c2">
+                    <label>Imp Fenêtre</label>
+                    <select name="imp_fenetre">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div>    
+                <div class="env_l2_c3">
+                    <label>Affranchissement</label><select name="affra">
+                        {% for affra in affras %}
+                        <option value="{{ affra }}">{{ affra }}</option>
+                        {% endfor %}
+                    </select>
+                </div> 
+                <div class="env_l2_c4">
+                    <label>Imp Affranchissement</label>
+                    <select name="imp_affra">
+                        <option value="True" selected>True</option>
+                        <option value="False">False</option>
+                    </select>
+                </div>   
+                <div class="env_l3_c1">
+                    <label>Date de Timbre</label>
+                    <input type="date" name="date_timbre" value={{ now }}>
+                </div> 
+                <div class="env_l3_c2">
+                    <label>Imp Date de Timbre</label>
+                    <select name="imp_date_timbre">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div>  
+                <div class="env_l3_c3">
+                    <label>Adr Expéditeur</label>
+                    <select name="adr_expe">
+                        <option value="DIRAL">DIRAL</option>
+                        <option value="PERSO" selected>PERSO</option>
+                        <option value="VIDE">VIDE</option>
+                    </select>
+                </div> 
+                <div class="env_l3_c4">
+                    <label>Ligne0</label>
+                    <select name="ligne0">
+                        <option value="DATAMATRIX" selected>DATAMATRIX</option>
+                        <option value="TEXTE">TEXTE</option>
+                        <option value="VIDE">VIDE</option>
+                    </select>
+                </div>            
+                <div class="env_l4_c1">
+                    <label>Etiquettes</label>
+                    <select name="etiquette">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div> 
+                <div class="env_l4_c2">
+                    <label>Lettre</label>
+                    <select name="lettre">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div>  
+                <div class="env_l4_c3">
+                    <label>Nb de Page</label>
+                    <input type="text" name="nb_page" value="1" placeholder="Nombre de page" class="inputTable">
+                </div> 
+                <div class="env_l4_c4">
+                    <label>Recto Verso</label>
+                    <select name="rv">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div>           
+                <div class="env_l5_c1">
+                    <label>Logo</label>
+                    <select name="logo">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div> 
+                <div class="env_l5_c2">
+                    <label>Alliage</label>
+                    <select name="alliage">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div>  
+                <div class="env_l5_c3">
+                    <label>AlliageC3</label>
+                    <select name="alliage_c3">
+                        <option value="True">True</option>
+                        <option value="False" selected>False</option>
+                    </select>
+                </div> 
+                <div class="env_l5_c4">
+                    <label>Repertoire Alliage</label>
+                    <select name="rep_alliage">
+                        <option value="P:\\Var\\Klesia\\Alliage">KLESIA</option>
+                        <option value="P:\\Var\\PASSAGE-PIETON\\Alliage">PASSAGE PIETON</option>
+                        <option value="VIDE" selected>VIDE</option>
+                    </select>
+                </div>
+                <div class="env_l6_c1">
+                    <label >Retour Transat</label>
+                    <select name="retour_transat" class="input">
+                        {% for fichier in fichiers(rep)[1] %}
+                            <option value="{{ fichier }}">{{ fichier }}</option>
+                        {% endfor %}
+                    </select>
+                </div> 
+                <div class="env_l6_c3">
+                    <label>Data Input</label>
+                    <select name="data_input" class="input">
+                        {% for fichier in fichiers(rep)[0] %}
+                        <option value="{{ fichier }}">{{ fichier }}</option>
+                        {% endfor %}
+                    </select>
+                </div> 
+                <div class="env_l7_c1">
+                    <button class="buttonEnv" type="reset">Annuler</button> 
+                </div> 
+                <div class="env_l7_c3">    
+                    <button class="buttonEnv" type="submit">Valider</button>
+                </div> 
+            </div>
+        </form>
+    </fieldset>
+{% endblock body %}

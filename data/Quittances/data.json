@@ -1,0 +1,13 @@
+{
+    "annexe": "False",
+    "b_annexe": "True",
+    "type_imp": "N",
+    "format": "R",
+    "imposition": "A4",
+    "assemblage": "True",
+    "imp_st": "False",
+    "poids": "5",
+    "echeance": "NVRHAVIS_20200915_V00.CSV",
+    "date_timbre": "18/09/2020",
+    "codes_ope": "260B_260C_260D_260E_260F"
+}

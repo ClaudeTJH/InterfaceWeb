@@ -1,0 +1,52 @@
+{% extends 'layouts/default.html'%}
+
+{% block body %}
+    {{ traitfichier }}
+    {% if traitfichier == "True" %}
+        <h2>Lancement de Traific</h2>
+    {% else %}
+        <h2>Traitement des Enveloppes</h2>
+    {% endif %}
+    
+    <fieldset>
+        <form method="post">
+            {% if traitfichier %}
+                <div class="env_autres">
+                    <label>Data Input</label>
+                    <select name="traific" class="input">
+                        {% for fichier in fichiers(rep)[2] %}
+                        <option value="{{ fichier }}">{{ fichier }}</option>
+                        {% endfor %}
+                    </select>                    
+                    <input name="client" value="{{ client }}" type="hidden">
+                    <input name="bt" value="{{ bt }}" type="hidden"> 
+                    <input name="debut" value="True" type="hidden">
+                <div>
+                    <button class="buttonEnv" type="reset">Annuler</button> 
+                </div>  
+                <div>  
+                    <button class="buttonEnv" type="submit">Valider</button>
+                </div>
+            {% else %}
+                <div class="enveloppe_client">                 
+                    <div class="envc_l1_c1">
+                        <label>Client</label>
+                        <select name="client" id="client" required>          
+                            {% for client in clients %}
+                                <option value="{{ client }}">{{ client }}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                    <div class="envc_l1_c2">
+                        <label>Numéro BT</label>
+                        <input type="text" name="bt" id="bt" placeholder="Saisir le numéro du BT" class="inputTable" required focus>
+                    </div> 
+                    <input name="debut" value="False" type="hidden">
+                    <div class="envc_l2_c1">
+                        <button class="buttonEnv" type="submit">Valider</button>
+                    </div>
+                </div>      
+            {% endif %}
+        </form>
+    </fieldset>
+{% endblock body %}
